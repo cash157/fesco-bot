@@ -1,0 +1,27 @@
+name: FESCO Bot Daily
+
+on:
+  schedule:
+    - cron: '0 15 * * *'  # daily at 10 AM PST
+  workflow_dispatch:      # manual trigger
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install selenium requests webdriver-manager
+
+      - name: Run FESCO bot
+        run: python home_bill.py
